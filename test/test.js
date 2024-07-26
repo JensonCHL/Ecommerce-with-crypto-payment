@@ -1,5 +1,7 @@
 const { expect } = require("chai");
+const { id } = require("ethers");
 const { ethers } = require("hardhat");
+const { beforeEach } = require("mocha");
 
 const tokens = (n) => {
   return ethers.parseUnits(n.toString(), 'ether')
@@ -11,7 +13,7 @@ const IMAGE = "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msz
 const COST = tokens(1)
 const RATING = 4
 const STOCK = 5
-describe('Joekowi', () => {
+describe('Joe', () => {
   let sc;
   let deployer, buyer;
   beforeEach(async () => {
@@ -78,9 +80,9 @@ describe('Joekowi', () => {
 
 
     it('update contract balance', async () => {
-      if (!SCAddress) {
-        throw new Error('Contract address is not defined');
-      }
+      // if (!SCAddress) {
+      //   throw new Error('Contract address is not defined');
+      // }
       const result = await ethers.provider.getBalance(SCAddress)
       expect(result).to.equal(COST)
     })
@@ -95,11 +97,55 @@ describe('Joekowi', () => {
       expect(order.item.name).to.equal(NAME)
 
     });
+    it('update contract balance', async () => {
+      const result = await ethers.provider.getBalance(SCAddress)
+      expect(result).to.equal(COST)
+    })
+    it('Emits buy event', () => {
+      expect(transaction).to.emit(sc,"Buy")
+    });
+    
+ 
+  });
+  describe('Withdrawing', () => {
+    let balanceBefore
+    
+    beforeEach(async ()=>{
+      let transaction = await sc.connect(deployer).list(
+        ID,
+        NAME,
+        CATEGORY,
+        IMAGE,
+        COST,
+        RATING,
+        STOCK
+      )
+      await transaction.wait()
+
+      transaction = await sc.connect(buyer).buy(ID,{value:COST})
+      await transaction.wait()
+
+      balanceBefore = await ethers.provider.getBalance(SCAddress)
+
+      transaction = await sc.connect(deployer).withdraw();
+      await transaction.wait()
+    })
+
+    it('Updates owner balance',  async () => {
+      let balance = await ethers.provider.getBalance(deployer);
+      expect(balance).to.be.greaterThan(balanceBefore);
+    });
+
+    it('Check account balance', async () => {
+      let balance = await ethers.provider.getBalance(SCAddress);
+      expect(balance).to.equal(0)
+
+    });
     
     
 
   });
-
+  
 
 
 

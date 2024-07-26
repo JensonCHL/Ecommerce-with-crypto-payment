@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "D:\\BlockChainGrind\\ecommerce\\contracts\\SC.sol": {
-      "lastModificationDate": 1721574502060,
-      "contentHash": "31539b1c055df8f3c692a9a74403f385",
+      "lastModificationDate": 1721744031950,
+      "contentHash": "8b77ffea28a9bb0991fd2abf478827ca",
       "sourceName": "contracts/SC.sol",
       "solcConfig": {
         "version": "0.8.24",
