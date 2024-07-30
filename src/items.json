@@ -52,7 +52,7 @@
             "image": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/watch.jpg",
             "price": "1.25",
             "rating": 4,
-            "stock": 0
+            "stock": 3
         },
         {
             "id": 7,
@@ -70,7 +70,7 @@
             "image": "https://ipfs.io/ipfs/QmTYEboq8raiBs7GTUg2yLXB3PMz6HuBNgNfSZBx5Msztg/train.jpg",
             "price": "0.20",
             "rating": 4,
-            "stock": 0
+            "stock": 4
         },
         {
             "id": 9,

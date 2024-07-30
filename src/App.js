@@ -1,11 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 // const ethers = require("ethers")
 
 import Navigation from './components/Navigation';
 import Section from './components/Section';
+import Product from './components/Product'
 
 import SC from './abis/SCS.json'
 import config from './config.json'
@@ -22,9 +24,16 @@ function App() {
   const [electronics, setElectronics] = useState(null);
   const [clothing, setClothing] = useState(null);
   const [toys, setToys] = useState(null);
+  const [item, setItem] = useState({});
+  const [toggle, setToggle] = useState(false);
 
-  const togglePop = () => {
+
+  const togglePop = (item) => {
+    setItem(item)
+    toggle ? setToggle(false) : setToggle(true)
     console.log("pop")
+    console.log(item)
+
   }
 
   const loadBloackchainData = async () => {
@@ -69,21 +78,19 @@ function App() {
       <h2
         className='text-[2rem] font-bold'
       >Tokokucing Best Sellers</h2>
-
       {electronics && clothing && toys && (
         <>
           <Section title={"Clothing & Jewelry"} items={clothing} togglePop={togglePop} />
           <Section title={"Electronics & Gadgets"} items={electronics} togglePop={togglePop} />
           <Section title={"Toys & Gaming"} items={toys} togglePop={togglePop} />
         </>
-
       )}
-
-      <p>{account}</p>
+      {toggle && (
+        <Product item={item} provider={provider} account={account} sc={joezon} togglePop={togglePop} />
+      )}
     </div>
   );
 
 
 }
-
 export default App;
